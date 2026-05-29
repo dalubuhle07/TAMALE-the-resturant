@@ -1,0 +1,100 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Dalubuhle Ndhlovu">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>butterfly theory</title>
+
+        <style>
+            .vinyl-wrapper {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                overflow: hidden;
+                margin: 20px auto;
+                cursor: pointer;
+            }
+
+            .vinyl-wrapper img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+
+            .vinyl-wrapper.spinning {
+                animation: spin 3s linear infinite;
+            }
+
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <p>ONE SMALL CHANGE HAS THE ABILITY TO CHANGE EVERYTHING</p>
+
+        <br>
+
+        <div class="vinyl-wrapper" id="vinyl" onclick="togglePlay()">
+            <img src="mother.jpeg" alt="Vinyl">
+        </div>
+
+        <p id="label">click vinyl to play</p>
+
+        <br>
+
+        <p><a href="index.html">back</a></p>
+
+        <br>
+
+        <p>&copy; 2025 Dalubuhle Ndhlovu</p>
+
+        <audio id="audio" preload="auto">
+            <source src="mother.mp3" type="audio/mpeg">
+            <source src="mother.wav" type="audio/wav">
+        </audio>
+
+        <script>
+
+            const audio = document.getElementById('audio');
+            const vinyl = document.getElementById('vinyl');
+            const label = document.getElementById('label');
+
+            window.addEventListener('load', function() {
+                audio.play().then(function() {
+                    vinyl.classList.add('spinning');
+                    label.textContent = 'now playing';
+                }).catch(function() {
+                    label.textContent = 'click vinyl to play';
+                });
+            });
+
+            function togglePlay() {
+                if (audio.paused) {
+                    audio.play();
+                    vinyl.classList.add('spinning');
+                    label.textContent = 'now playing';
+                } else {
+                    audio.pause();
+                    vinyl.classList.remove('spinning');
+                    label.textContent = 'paused';
+                }
+            }
+
+            audio.addEventListener('ended', function() {
+                vinyl.classList.remove('spinning');
+                label.textContent = 'done';
+            });
+
+        </script>
+
+    </body>
+</html>
+```

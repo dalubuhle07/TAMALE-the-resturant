@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Dalubuhle Ndhlovu">
+        <meta name="description" content="Listen to TAMALE!!">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TAMALE!! - Listen</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+        <style>
+            .vinyl-section {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 20px;
+            }
+
+            .vinyl-wrapper {
+                width: 300px;
+                height: 300px;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 6px solid #1a1a1a;
+                box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+                cursor: pointer;
+            }
+
+            .vinyl-wrapper img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+                display: block;
+            }
+
+            .vinyl-wrapper.spinning {
+                animation: spin 3s linear infinite;
+            }
+
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to   { transform: rotate(360deg); }
+            }
+
+            .vinyl-label {
+                margin-top: 20px;
+                font-size: 1rem;
+                color: #1a1a1a;
+                text-align: center;
+            }
+
+            .vinyl-controls {
+                margin-top: 20px;
+                display: flex;
+                gap: 16px;
+            }
+
+            .vinyl-controls button {
+                font-family: 'Rubik Mono One', monospace;
+                background-color: #1a1a1a;
+                color: yellow;
+                border: 2px solid #1a1a1a;
+                padding: 10px 24px;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+            .vinyl-controls button:hover {
+                background-color: yellow;
+                color: #1a1a1a;
+            }
+
+            .progress-bar-wrapper {
+                width: 300px;
+                height: 10px;
+                background-color: #1a1a1a;
+                margin-top: 20px;
+                border: 2px solid #1a1a1a;
+            }
+
+            #progress-bar {
+                height: 100%;
+                width: 0%;
+                background-color: green;
+                transition: width 0.5s linear;
+            }
+
+            #time-display {
+                margin-top: 8px;
+                font-size: 0.85rem;
+                color: #1a1a1a;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <header>
+            <h1>TAMALE!! - LISTEN</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#menu">Menu</a></li>
+                    <li><a href="order.html">Order Now</a></li>
+                    <li><a href="contacts.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <hr>
+
+        <main>
+            <section class="vinyl-section">
+                <h2>Now Playing</h2>
+
+                <div class="vinyl-wrapper" id="vinyl" onclick="togglePlay()">
+                    <img src="vinyl.png" alt="Vinyl record" id="vinyl-img">
+                </div>
+
+                <p class="vinyl-label" id="vinyl-label">Click the vinyl or wait — it plays automatically!</p>
+
+                <div class="vinyl-controls">
+                    <button onclick="togglePlay()" id="play-btn">⏸ PAUSE</button>
+                    <button onclick="restartSong()">↩ RESTART</button>
+                </div>
+
+                <div class="progress-bar-wrapper">
+                    <div id="progress-bar"></div>
+                </div>
+
+                <p id="time-display">0:00 / 0:00</p>
+
+            </section>
+        </main>
+
+        <hr>
+
+        <footer>
+            <p>A small website created to relearn HTML</p>
+            <p>&copy; 2025 Dalubuhle Ndhlovu</p>
+        </footer>
+
+        <audio id="tamale-audio" preload="auto">
+            <source src="tamale_jingle.mp3" type="audio/mpeg">
+        </audio>
+
+        <script>
+
+            const audio   = document.getElementById('tamale-audio');
+            const vinyl   = document.getElementById('vinyl');
+            const playBtn = document.getElementById('play-btn');
+            const label   = document.getElementById('vinyl-label');
+            const bar     = document.getElementById('progress-bar');
+            const timeDisplay = document.getElementById('time-display');
+
+            window.addEventListener('load', function() {
+                audio.play().then(function() {
+                    vinyl.classList.add('spinning');
+                    playBtn.textContent = '⏸ PAUSE';
+                    label.textContent = '🎵 Now Playing...';
+                }).catch(function() {
+                    label.textContent = '▶ Click the vinyl to play!';
+                    playBtn.textContent = '▶ PLAY';
+                });
+            });
+
+            function togglePlay() {
+                if (audio.paused) {
+                    audio.play();
+                    vinyl.classList.add('spinning');
+                    playBtn.textContent = '⏸ PAUSE';
+                    label.textContent = '🎵 Now Playing...';
+                } else {
+                    audio.pause();
+                    vinyl.classList.remove('spinning');
+                    playBtn.textContent = '▶ PLAY';
+                    label.textContent = '⏸ Paused';
+                }
+            }
+
+            function restartSong() {
+                audio.currentTime = 0;
+                audio.play();
+                vinyl.classList.add('spinning');
+                playBtn.textContent = '⏸ PAUSE';
+                label.textContent = '🎵 Now Playing...';
+            }
+
+            audio.addEventListener('ended', function() {
+                vinyl.classList.remove('spinning');
+                playBtn.textContent = '▶ PLAY';
+                label.textContent = '⏹ Song finished!';
+                bar.style.width = '100%';
+            });
+
+            audio.addEventListener('timeupdate', function() {
+                if (audio.duration) {
+                    const percent = (audio.currentTime / audio.duration) * 100;
+                    bar.style.width = percent + '%';
+
+                    const current = formatTime(audio.currentTime);
+                    const total   = formatTime(audio.duration);
+                    timeDisplay.textContent = current + ' / ' + total;
+                }
+            });
+
+            function formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return mins + ':' + (secs < 10 ? '0' : '') + secs;
+            }
+
+        </script>
+
+    </body>
+</html>

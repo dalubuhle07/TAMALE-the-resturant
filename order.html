@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Dalubuhle Ndhlovu">
+        <meta name="description" content="Order your TAMALE!! now">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TAMALE!! - Order Now</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+        <style>
+            .tamale-item {
+                background-color: yellow;
+                border: 2px solid #1a1a1a;
+                padding: 16px;
+                margin-bottom: 16px;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 14px;
+            }
+
+            .tamale-name {
+                min-width: 200px;
+                font-size: 1rem;
+            }
+
+            .tamale-price {
+                background-color: green;
+                color: yellow;
+                padding: 4px 10px;
+                font-size: 0.85rem;
+                border: 2px solid #1a1a1a;
+                min-width: 120px;
+                text-align: center;
+            }
+
+            .tamale-item select,
+            .tamale-item input[type="number"] {
+                font-family: 'Rubik Mono One', monospace;
+                background-color: #FF6600;
+                color: #1a1a1a;
+                border: 2px solid #1a1a1a;
+                padding: 8px;
+                font-size: 0.95rem;
+                width: 120px;
+            }
+
+            .tamale-item select:focus,
+            .tamale-item input[type="number"]:focus {
+                outline: 3px solid green;
+            }
+
+            #order-total {
+                background-color: green;
+                color: yellow;
+                padding: 16px 20px;
+                font-size: 1.2rem;
+                border: 3px solid #1a1a1a;
+                margin: 20px 0;
+                text-align: center;
+            }
+
+            #order-summary {
+                background-color: rgba(255, 255, 255, 0.2);
+                border: 3px solid green;
+                padding: 20px;
+                margin-top: 24px;
+                display: none;
+            }
+
+            #order-summary h3 {
+                color: green;
+                margin-bottom: 12px;
+            }
+
+            #summary-text {
+                white-space: pre-line;
+                line-height: 2;
+            }
+
+            .celebration {
+                animation: celebrate 0.5s ease infinite alternate;
+            }
+
+            @keyframes celebrate {
+                from { transform: scale(1);    color: yellow; }
+                to   { transform: scale(1.05); color: green;  }
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <header>
+            <h1 id="page-title">ORDER TAMALE!!</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#menu">Menu</a></li>
+                    <li><a href="tamaleins.html">Listen</a></li>
+                    <li><a href="contacts.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <hr>
+
+        <main>
+
+            <section>
+                <h2>Choose Your Tamales</h2>
+                <p>Prices increase with size. Small → Medium → Large → up to R40.00</p>
+
+                <div class="tamale-item">
+                    <span class="tamale-name">Classic Chicken</span>
+                    <span class="tamale-price" id="price-display-chicken">R19.99</span>
+                    <select id="size-chicken" name="size-chicken">
+                        <option value="small">Small — R19.99</option>
+                        <option value="medium">Medium — R29.99</option>
+                        <option value="large">Large — R39.99</option>
+                    </select>
+                    <input type="number" id="qty-chicken" name="qty-chicken" min="0" max="20" value="0">
+                </div>
+
+                <div class="tamale-item">
+                    <span class="tamale-name">Spicy Beef</span>
+                    <span class="tamale-price" id="price-display-beef">R21.99</span>
+                    <select id="size-beef" name="size-beef">
+                        <option value="small">Small — R21.99</option>
+                        <option value="medium">Medium — R31.99</option>
+                        <option value="large">Large — R40.00</option>
+                    </select>
+                    <input type="number" id="qty-beef" name="qty-beef" min="0" max="20" value="0">
+                </div>
+
+                <div class="tamale-item">
+                    <span class="tamale-name">Sweet Corn</span>
+                    <span class="tamale-price" id="price-display-corn">R19.99</span>
+                    <select id="size-corn" name="size-corn">
+                        <option value="small">Small — R19.99</option>
+                        <option value="medium">Medium — R29.99</option>
+                        <option value="large">Large — R39.99</option>
+                    </select>
+                    <input type="number" id="qty-corn" name="qty-corn" min="0" max="20" value="0">
+                </div>
+
+                <div class="tamale-item">
+                    <span class="tamale-name">Veggie Delight</span>
+                    <span class="tamale-price" id="price-display-veggie">R24.99</span>
+                    <select id="size-veggie" name="size-veggie">
+                        <option value="small">Small — R24.99</option>
+                        <option value="medium">Medium — R34.99</option>
+                        <option value="large">Large — R40.00</option>
+                    </select>
+                    <input type="number" id="qty-veggie" name="qty-veggie" min="0" max="20" value="0">
+                </div>
+
+                <div id="order-total">TOTAL: R0.00</div>
+
+            </section>
+
+            <section>
+                <h2>Your Details</h2>
+
+                <form id="order-form" action="#" method="post">
+
+                    <label for="customer-name">Full Name:</label>
+                    <input type="text" id="customer-name" name="customer-name" placeholder="Your full name" required>
+
+                    <label for="customer-phone">Phone Number:</label>
+                    <input type="tel" id="customer-phone" name="customer-phone" placeholder="+27 000 000 000" required>
+
+                    <label for="customer-email">Email Address:</label>
+                    <input type="email" id="customer-email" name="customer-email" placeholder="your@email.com" required>
+
+                    <label for="delivery-address">Delivery Address:</label>
+                    <input type="text" id="delivery-address" name="delivery-address" placeholder="Street, Suburb, City" required>
+
+                    <br>
+
+                    <button type="submit">PLACE MY ORDER</button>
+
+                </form>
+
+                <div id="order-summary">
+                    <h3>ORDER CONFIRMED!</h3>
+                    <p id="summary-text"></p>
+                </div>
+
+            </section>
+
+        </main>
+
+        <hr>
+
+        <footer>
+            <p>A small website created to relearn HTML</p>
+            <p>&copy; 2025 Dalubuhle Ndhlovu</p>
+        </footer>
+
+        <audio id="celebration-sound" preload="auto">
+            <source src="ringtone.mp3" type="audio/mpeg">
+            <source src="ringtone.wav" type="audio/wav">
+            <source src="ringtone.ogg" type="audio/ogg">
+        </audio>
+
+        <script>
+
+            const sizePrices = {
+                chicken: { small: 19.99, medium: 29.99, large: 39.99 },
+                beef:    { small: 21.99, medium: 31.99, large: 40.00 },
+                corn:    { small: 19.99, medium: 29.99, large: 39.99 },
+                veggie:  { small: 24.99, medium: 34.99, large: 40.00 }
+            };
+
+            const types = ['chicken', 'beef', 'corn', 'veggie'];
+
+            function getPrice(type) {
+                const size = document.getElementById('size-' + type).value;
+                return sizePrices[type][size];
+            }
+
+            function updatePriceDisplay(type) {
+                const price = getPrice(type);
+                document.getElementById('price-display-' + type).textContent = 'R' + price.toFixed(2);
+            }
+
+            function updateTotal() {
+                let total = 0;
+                types.forEach(function(type) {
+                    const qty = parseInt(document.getElementById('qty-' + type).value) || 0;
+                    total += qty * getPrice(type);
+                });
+                document.getElementById('order-total').textContent = 'TOTAL: R' + total.toFixed(2);
+            }
+
+            types.forEach(function(type) {
+                document.getElementById('size-' + type).addEventListener('change', function() {
+                    updatePriceDisplay(type);
+                    updateTotal();
+                });
+                document.getElementById('qty-' + type).addEventListener('input', updateTotal);
+            });
+
+            function playSound() {
+                const sound = document.getElementById('celebration-sound');
+                sound.currentTime = 0;
+                const attempt = sound.play();
+                if (attempt !== undefined) {
+                    attempt.catch(function() {
+                        sound.muted = false;
+                        sound.play();
+                    });
+                }
+            }
+
+            document.getElementById('order-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const quantities = types.map(function(type) {
+                    return parseInt(document.getElementById('qty-' + type).value) || 0;
+                });
+
+                const totalQty = quantities.reduce(function(a, b) { return a + b; }, 0);
+
+                if (totalQty > 0) {
+                    playSound();
+                    document.getElementById('page-title').classList.add('celebration');
+                }
+
+                const names = ['🍗 Classic Chicken', '🥩 Spicy Beef', '🌽 Sweet Corn', '🥦 Veggie Delight'];
+
+                let summaryLines = [];
+                let total = 0;
+
+                quantities.forEach(function(qty, index) {
+                    if (qty > 0) {
+                        const type      = types[index];
+                        const size      = document.getElementById('size-' + type).value;
+                        const price     = getPrice(type);
+                        const lineTotal = (qty * price).toFixed(2);
+                        total          += qty * price;
+                        summaryLines.push(names[index] + ' — ' + size + ' x' + qty + ' = R' + lineTotal);
+                    }
+                });
+
+                if (summaryLines.length === 0) {
+                    alert('Please add at least one tamale to your order!');
+                    return;
+                }
+
+                const customerName    = document.getElementById('customer-name').value;
+                const customerPhone   = document.getElementById('customer-phone').value;
+                const customerEmail   = document.getElementById('customer-email').value;
+                const deliveryAddress = document.getElementById('delivery-address').value;
+
+                const summaryText =
+                    'Name: '       + customerName    + '\n' +
+                    'Phone: '      + customerPhone   + '\n' +
+                    'Email: '      + customerEmail   + '\n' +
+                    'Deliver to: ' + deliveryAddress + '\n\n' +
+                    'Order:\n'     + summaryLines.join('\n') + '\n\n' +
+                    'TOTAL: R'     + total.toFixed(2);
+
+                document.getElementById('summary-text').innerText = summaryText;
+
+                const summaryBox = document.getElementById('order-summary');
+                summaryBox.style.display = 'block';
+                summaryBox.scrollIntoView({ behavior: 'smooth' });
+
+            });
+
+        </script>
+
+    </body>
+</html>
