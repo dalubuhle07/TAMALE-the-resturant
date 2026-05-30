@@ -126,7 +126,7 @@
 
                 <div class="vinyl-controls">
                     <button onclick="togglePlay()" id="play-btn">⏸ PAUSE</button>
-                    <button onclick="restartSong()">↩ RESTART</button>
+                    <button onclick="restartSong()"> RESTART</button>
                 </div>
 
                 <div class="progress-bar-wrapper">
@@ -161,11 +161,11 @@
             window.addEventListener('load', function() {
                 audio.play().then(function() {
                     vinyl.classList.add('spinning');
-                    playBtn.textContent = '⏸ PAUSE';
-                    label.textContent = '🎵 Now Playing...';
+                    playBtn.textContent = 'PAUSE';
+                    label.textContent = 'Now Playing...';
                 }).catch(function() {
-                    label.textContent = '▶ Click the vinyl to play!';
-                    playBtn.textContent = '▶ PLAY';
+                    label.textContent = 'Click the vinyl to play!';
+                    playBtn.textContent = 'PLAY';
                 });
             });
 
@@ -173,13 +173,13 @@
                 if (audio.paused) {
                     audio.play();
                     vinyl.classList.add('spinning');
-                    playBtn.textContent = '⏸ PAUSE';
-                    label.textContent = '🎵 Now Playing...';
+                    playBtn.textContent = 'PAUSE';
+                    label.textContent = 'Now Playing...';
                 } else {
                     audio.pause();
                     vinyl.classList.remove('spinning');
-                    playBtn.textContent = '▶ PLAY';
-                    label.textContent = '⏸ Paused';
+                    playBtn.textContent = 'PLAY';
+                    label.textContent = 'Paused';
                 }
             }
 
@@ -187,14 +187,14 @@
                 audio.currentTime = 0;
                 audio.play();
                 vinyl.classList.add('spinning');
-                playBtn.textContent = '⏸ PAUSE';
-                label.textContent = '🎵 Now Playing...';
+                playBtn.textContent = 'PAUSE';
+                label.textContent = 'Now Playing...';
             }
 
             audio.addEventListener('ended', function() {
                 vinyl.classList.remove('spinning');
-                playBtn.textContent = '▶ PLAY';
-                label.textContent = '⏹ Song finished!';
+                playBtn.textContent = 'PLAY';
+                label.textContent = 'Song finished!';
                 bar.style.width = '100%';
             });
 
